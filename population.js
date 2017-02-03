@@ -1,7 +1,12 @@
+// array containing randomly generated "words"
 var population = []
 
+/**
+ * event handler to generate the population
+ * triggers 'calc_fitness' event
+ */
 $('body').on('gen_pop', function(event){
-    for( var i = 0; i < population_size; i++) {
+    for(var i = 0; i < population_size; i++) {
         var dna_obj = {dna_sequence: "", fitness: 0}
         dna_obj.dna_sequence += getRndSCWord(target.length)
         population.push(dna_obj)
@@ -10,6 +15,9 @@ $('body').on('gen_pop', function(event){
     $('body').trigger('calc_fitness')
 })
 
+/**
+ * function to calculate fitness of each dna_obj
+ */
 $('body').on('calc_fitness', function(event) {
     var sum_of_fitness = 0
     for( var i = 0; i < population.length; i++) {
@@ -23,6 +31,9 @@ $('body').on('calc_fitness', function(event) {
     showBestFit(population)
 })
 
+/**
+ * generates a sequence of small case characters
+ */
 function getRndSCWord(length) {
     var char = ""
     for( var i = 0; i < length; i++) {
@@ -32,6 +43,10 @@ function getRndSCWord(length) {
     return char
 }
 
+/**
+ * calculates the fitness of a given sequence relative to a given target
+ * fitness formula: (sum of matching characters) / length of target
+ */
 function calcFitness(target, sequence) {
     var fitness = 0
     for(var i = 0; i < target.length; i++) {
@@ -42,6 +57,11 @@ function calcFitness(target, sequence) {
     return fitness / target.length
 }
 
+/**
+ * function to show current sequence with highest fitness
+ * if two or more sequences share highest fitness,
+ * the first highest sequence is shown
+ */
 function showBestFit(population) {
     best_fit = 0
     best_fit_index = 0
