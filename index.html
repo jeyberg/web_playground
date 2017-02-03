@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Evolutionary Algorithm</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+    
+    </head>
+    <body>
+        <div>
+            Which Word? <input type="text" id="target_input" value="hello"> <br>
+            Population Size? <input id="population_input" value="100"> <br>
+            Mutation Rate? <input id="mutation_input" value="0.01"> <br>
+            <button type="button" id="evo_button">Evolve!</button>
+        </div>
+        <div>
+            Target: <p id="target"></p>
+            Population: <p id="population_size"></p>
+            Mutation: <p id="mutation_rate"></p>
+            Avg. Fitness: <p id="avg_fitness"></p>
+            Best Fit: <p id="best_fit"></p>
+        </div>
+        <div id="current_population">
+        </div>
+         <script src="population.js"></script>
+    <script src="evolution.js"></script>   
+    </body>
+</html>
