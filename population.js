@@ -12,16 +12,6 @@ $('body').on('gen_pop', function(event){
         dna_obj.dna_sequence = getRndSCWord(target.length)
         population.push(dna_obj)
     }    
-    $('body').trigger('calc_fitness')
-})
-
-/**
- * function to calculate fitness of each dna_obj
- */
-$('body').on('calc_fitness', function(event) {
-    for( var i = 0; i < population.length; i++) {
-        population[i].fitness = calcFitness(target, population[i].dna_sequence)
-    }    
     $('body').trigger('mutate')
 })
 
@@ -36,9 +26,21 @@ $('body').on('mutate', function(event){
             }
         }
     })
+    $('body').trigger('calc_fitness')
+    
+})
+
+/**
+ * function to calculate fitness of each dna_obj
+ */
+$('body').on('calc_fitness', function(event) {
+    for( var i = 0; i < population.length; i++) {
+        population[i].fitness = calcFitness(target, population[i].dna_sequence)
+    }    
     showBestFit()
     showAvgFitness()
     updateCurrPop()
+    $('body').trigger('breed')
 })
 
 /**
