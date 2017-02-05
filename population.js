@@ -1,16 +1,16 @@
 // array containing randomly generated "words"
-var population = []
+var population
 
 /**
  * event handler to generate the population
  * triggers 'calc_fitness' event
  */
 $('body').on('gen_pop', function(event){
+    population = []
     for(var i = 0; i < population_size; i++) {
         var dna_obj = {dna_sequence: "", fitness: 0}
-        dna_obj.dna_sequence += getRndSCWord(target.length)
+        dna_obj.dna_sequence = getRndSCWord(target.length)
         population.push(dna_obj)
-        $('#current_population').append(population[i].dna_sequence+" ")
     }    
     $('body').trigger('calc_fitness')
 })
@@ -19,16 +19,26 @@ $('body').on('gen_pop', function(event){
  * function to calculate fitness of each dna_obj
  */
 $('body').on('calc_fitness', function(event) {
-    var sum_of_fitness = 0
     for( var i = 0; i < population.length; i++) {
         population[i].fitness = calcFitness(target, population[i].dna_sequence)
-        sum_of_fitness += population[i].fitness
-    }
-    $('body').trigger({
-        type: 'show_avg_fitness',
-        sum_of_fitness: sum_of_fitness
+    }    
+    $('body').trigger('mutate')
+})
+
+/**
+ * event handler to (prpably) mutate every dna_obj
+ */
+$('body').on('mutate', function(event){
+    population.forEach(function(item, index){
+        for (var i = 0; i < target.length; i++) {
+            if (Math.random() < mutation_rate) {
+                population[index].dna_sequence = replaceRndAt(i, item.dna_sequence)
+            }
+        }
     })
-    showBestFit(population)
+    showBestFit()
+    showAvgFitness()
+    updateCurrPop()
 })
 
 /**
@@ -58,17 +68,11 @@ function calcFitness(target, sequence) {
 }
 
 /**
- * function to show current sequence with highest fitness
- * if two or more sequences share highest fitness,
- * the first highest sequence is shown
+ * function to replace a char in a string at a given index
  */
-function showBestFit(population) {
-    best_fit = 0
-    best_fit_index = 0
-    for( var i = 0; i < population.length; i++) {
-        if (population[i].fitness > best_fit) {
-            best_fit_index = i
-        }
-    }
-    $('#best_fit').html(population[best_fit_index].dna_sequence)
+function replaceRndAt(index, string) {
+    var array = string.split("")
+    array[index] = String.fromCharCode(Math.floor(Math.random() * (122-98)) + 97)
+    var newStr = array.join("")
+    return newStr
 }
