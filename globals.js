@@ -22,6 +22,7 @@ function showBestFit() {
         }
     }
     $('#best_fit').html(population[best_fit_index].dna_sequence)
+    console.log(population[best_fit_index].dna_sequence)
 }
 
 /**
