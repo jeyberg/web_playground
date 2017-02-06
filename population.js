@@ -15,17 +15,52 @@ $('body').on('gen_pop', function(event){
     $('body').trigger('mutate')
 })
 
+function genPop() {
+    population = []
+    for(var i = 0; i < population_size; i++) {
+        var dna_obj = {dna_sequence: "", fitness: 0}
+        dna_obj.dna_sequence = getRndSCWord(target.length)
+        population.push(dna_obj)
+    }
+    mutate()
+    //window.setTimeout(mutate(), 1000)
+}
+
+function mutate() {
+    var tar_length = target.length
+    for(var j = 0; j < population_size; j++) {
+        for (var i = 0; i < tar_length; i++) {
+            if (Math.random() < mutation_rate) {
+                population[j].dna_sequence = replaceRndAt(i, population[j].dna_sequence)
+            }
+        }
+    }
+    calcFitnessAll()
+    //window.setTimeout(calcFitnessAll(), 1000)
+}
+
+function calcFitnessAll() {
+    for( var i = 0; i < population.length; i++) {
+        population[i].fitness = calcFitness(target, population[i].dna_sequence)
+    }    
+    showBestFit()
+    showAvgFitness()
+    updateCurrPop()
+    breed()
+    //window.setTimeout(breed(), 1000)
+}
 /**
  * event handler to (prpably) mutate every dna_obj
  */
 $('body').on('mutate', function(event){
-    population.forEach(function(item, index){
+    /*population.forEach(function(item, index){
         for (var i = 0; i < target.length; i++) {
             if (Math.random() < mutation_rate) {
                 population[index].dna_sequence = replaceRndAt(i, item.dna_sequence)
             }
         }
-    })
+    })*/
+    
     $('body').trigger('calc_fitness')
     
 })

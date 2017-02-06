@@ -16,7 +16,7 @@ $('body').on('show_avg_fitness', function(event) {
 function showBestFit() {
     best_fit = 0
     best_fit_index = 0
-    for( var i = 0; i < population.length; i++) {
+    for( var i = 0; i < population_size; i++) {
         if (population[i].fitness > best_fit) {
             best_fit_index = i
         }
@@ -29,9 +29,9 @@ function showBestFit() {
  */
 function showAvgFitness() {
     var sum_of_fitness = 0
-    population.forEach(function(dna_obj, index){
-        sum_of_fitness += dna_obj.fitness
-    })
+    for(var i = 0; i < population_size; i++) {
+        sum_of_fitness += population[i].fitness
+    }
     avg_fitness = sum_of_fitness / population.length
     $('#avg_fitness').html(avg_fitness)
 }
@@ -41,7 +41,7 @@ function showAvgFitness() {
  */
 function updateCurrPop() {
     $('#current_population').empty()
-    population.forEach(function (item, index){
-        $('#current_population').append(item.dna_sequence + " ")
-    })
+    for( var i = 0; i < population_size; i++) {
+        $('#current_population').append(population[i].dna_sequence + " ")
+    }
 }
