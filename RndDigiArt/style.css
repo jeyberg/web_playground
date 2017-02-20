@@ -1,0 +1,20 @@
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+td {
+    width: 25px;
+    height: 25px;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+input {
+    width: 50px;
+}
